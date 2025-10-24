@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Registros - TeEchoUnaMano TUM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --background: 250 250 250;
+            --foreground: 38 38 38;
+            --card: 255 255 255;
+            --card-foreground: 38 38 38;
+            --primary: 59 130 246;
+            --primary-foreground: 250 250 250;
+            --muted: 242 242 242;
+            --muted-foreground: 115 115 115;
+            --accent: 59 130 246;
+            --accent-foreground: 250 250 250;
+            --destructive: 239 68 68;
+            --border: 229 229 229;
+            --ring: 59 130 246;
+        }
+        
+        .dark {
+            --background: 31 31 31;
+            --foreground: 242 242 242;
+            --card: 41 41 41;
+            --card-foreground: 242 242 242;
+            --muted: 56 56 56;
+            --muted-foreground: 166 166 166;
+            --border: 64 64 64;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: rgb(var(--background));
+            color: rgb(var(--foreground));
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 0.75rem;
+        }
+        
+        /* Header Styles */
+        .header {
+            border-bottom: 1px solid rgb(var(--border) / 0.5);
+            background-color: rgb(var(--card) / 0.5);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 0.5rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+        }
+        
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 0.375rem;
+            flex-shrink: 0;
+        }
+        
+        .logo-text h1 {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: rgb(var(--foreground));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .logo-text p {
+            font-size: 0.6875rem;
+            color: rgb(var(--muted-foreground));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .header-link {
+            display: none;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 1.5rem 0.75rem;
+        }
+        
+        .title-section {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        /* Updated badge with fluorescent green and innovative design */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border: 2px solid #00ff88;
+            margin-bottom: 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.5),
+                0 0 40px rgba(0, 255, 136, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 136, 0.5),
+                    0 0 40px rgba(0, 255, 136, 0.3),
+                    0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 136, 0.8),
+                    0 0 60px rgba(0, 255, 136, 0.5),
+                    0 0 80px rgba(0, 255, 136, 0.3),
+                    0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .pulse-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: #000;
+            animation: pulseDot 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes pulseDot {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            color: rgb(var(--muted-foreground));
+            font-size: 0.875rem;
+            max-width: 42rem;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* Search Form */
+        .search-form {
+            max-width: 42rem;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 640px) {
+            .search-container {
+                flex-direction: row;
+            }
+        }
+        
+        .input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.625rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            color: rgb(var(--muted-foreground));
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.625rem 0.625rem 0.625rem 2.25rem;
+            border: 1px solid rgb(var(--border) / 0.5);
+            border-radius: 0.5rem;
+            background-color: rgb(var(--card));
+            color: rgb(var(--foreground));
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        input:focus {
+            border-color: rgb(var(--ring));
+            box-shadow: 0 0 0 3px rgb(var(--ring) / 0.1);
+        }
+        
+        button {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: rgb(var(--primary));
+            color: rgb(var(--primary-foreground));
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        button:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgb(var(--primary-foreground));
+            border-top-color: transparent;
+            border-radius: 9999px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Error Message */
+        .error-message {
+            max-width: 42rem;
+            margin: 0 auto 1.5rem;
+            padding: 0.75rem;
+            border: 1px solid rgb(var(--destructive) / 0.5);
+            border-radius: 0.5rem;
+            background-color: rgb(var(--destructive) / 0.1);
+            color: rgb(var(--destructive));
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+        
+        /* Grid Layout */
+        .records-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .records-grid {
+                grid-template-columns: 2fr 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .section-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+        
+        /* Record Card */
+        .record-card {
+            position: relative;
+            border: 1px solid rgb(var(--border) / 0.5);
+            border-radius: 0.75rem;
+            background-color: rgb(var(--card));
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .record-card:hover {
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+            border-color: rgb(var(--accent) / 0.5);
+        }
+        
+        .record-card:active {
+            transform: scale(0.99);
+        }
+        
+        .record-card.featured {
+            border-color: rgb(var(--accent) / 0.3);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .record-card.featured:hover {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: -0.5rem;
+            right: 1rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            color: white;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .status-badge.en-hora {
+            background-color: rgb(5 150 105);
+        }
+        
+        .status-badge.realizado {
+            background-color: rgb(147 51 234);
+        }
+        
+        .status-badge.pendiente {
+            background-color: rgb(202 138 4);
+        }
+        
+        .recent-badge {
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--accent));
+            color: rgb(var(--accent-foreground));
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+        
+        .field-row {
+            display: flex;
+            align-items: start;
+            gap: 0.625rem;
+            margin-bottom: 0.625rem;
+        }
+        
+        .field-icon {
+            flex-shrink: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--accent) / 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .field-icon svg {
+            width: 0.875rem;
+            height: 0.875rem;
+            color: rgb(var(--accent));
+        }
+        
+        .field-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .field-label {
+            font-size: 0.6875rem;
+            color: rgb(var(--muted-foreground));
+            margin-bottom: 0.125rem;
+        }
+        
+        .field-value {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: rgb(var(--card-foreground));
+            word-break: break-word;
+        }
+        
+        .view-details {
+            padding-top: 0.625rem;
+            border-top: 1px solid rgb(var(--border) / 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.625rem;
+        }
+        
+        .view-details span {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: rgb(var(--accent));
+        }
+        
+        .record-card:hover .view-details span {
+            text-decoration: underline;
+        }
+        
+        .chevron-icon {
+            width: 1rem;
+            height: 1rem;
+            color: rgb(var(--accent));
+            transition: transform 0.2s;
+        }
+        
+        .record-card:hover .chevron-icon {
+            transform: translateX(0.25rem);
+        }
+        
+        /* Compact Card */
+        .record-card.compact {
+            padding: 0.75rem;
+        }
+        
+        .compact-content {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 0.625rem;
+        }
+        
+        .compact-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .compact-status {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.375rem;
+        }
+        
+        .compact-status svg {
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+        
+        .compact-status span {
+            font-size: 0.6875rem;
+            font-weight: 500;
+        }
+        
+        .compact-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: rgb(var(--card-foreground));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.25rem;
+        }
+        
+        .compact-date {
+            font-size: 0.6875rem;
+            color: rgb(var(--muted-foreground));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            background-color: rgb(var(--background) / 0.8);
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal-overlay.hidden {
+            display: none;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 42rem;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+        
+        .modal-sheet {
+            position: relative;
+            background-color: rgb(var(--card));
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            border: 1px solid rgb(var(--border) / 0.5);
+        }
+        
+        .perforated-top {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            background-color: rgb(var(--muted) / 0.3);
+        }
+        
+        .perforation-dot {
+            width: 0.3125rem;
+            height: 0.3125rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--background));
+            border: 1px solid rgb(var(--border) / 0.5);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 10;
+            border-radius: 9999px;
+            padding: 0.375rem;
+            background-color: rgb(var(--muted));
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .close-button:hover {
+            background-color: rgb(var(--muted) / 0.8);
+        }
+        
+        .close-button:active {
+            transform: scale(0.95);
+        }
+        
+        .modal-body {
+            padding: 2rem 1rem 1rem;
+            overflow-y: auto;
+            max-height: 85vh;
+        }
+        
+        .modal-header {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed rgb(var(--border) / 0.5);
+        }
+        
+        .modal-title-row {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding-right: 3rem; /* Increased from 2rem to 3rem to create more space for close button */
+        }
+        
+        .modal-title-content {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+        
+        .modal-title-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background-color: rgb(var(--accent) / 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-title-icon svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: rgb(var(--accent));
+        }
+        
+        .modal-title h2 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: rgb(var(--card-foreground));
+            margin-bottom: 0.25rem;
+        }
+        
+        .modal-title p {
+            font-size: 0.75rem;
+            color: rgb(var(--muted-foreground));
+        }
+        
+        .modal-status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            border: 1px solid;
+            flex-shrink: 0;
+        }
+        
+        .modal-status-badge svg {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+        
+        .modal-status-badge span {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .modal-badges {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .code-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--accent) / 0.1);
+            border: 1px solid rgb(var(--accent) / 0.2);
+        }
+        
+        .code-badge svg {
+            width: 0.75rem;
+            height: 0.75rem;
+            color: rgb(var(--accent));
+        }
+        
+        .code-badge span {
+            font-size: 0.6875rem;
+            font-family: monospace;
+            font-weight: 500;
+            color: rgb(var(--accent));
+        }
+        
+        .paid-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            background-color: rgb(5 150 105 / 0.1);
+            border: 1px solid rgb(5 150 105 / 0.2);
+        }
+        
+        .paid-badge svg {
+            width: 0.75rem;
+            height: 0.75rem;
+            color: rgb(5 150 105);
+        }
+        
+        .paid-badge span {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: rgb(5 150 105);
+        }
+        
+        .modal-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+        
+        .modal-field {
+            position: relative;
+            border: 1px solid rgb(var(--border) / 0.5);
+            border-radius: 0.5rem;
+            background-color: rgb(var(--muted) / 0.3);
+            padding: 0.75rem;
+            transition: all 0.2s;
+        }
+        
+        .modal-field:hover {
+            background-color: rgb(var(--muted) / 0.5);
+        }
+        
+        .modal-field-content {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+        
+        .modal-field-icon {
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--accent) / 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-field-icon svg {
+            width: 1rem;
+            height: 1rem;
+            color: rgb(var(--accent));
+        }
+        
+        .modal-field-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .modal-field-label {
+            font-size: 0.6875rem;
+            color: rgb(var(--muted-foreground));
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+        
+        .modal-field-value {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: rgb(var(--card-foreground));
+            word-break: break-word;
+        }
+        
+        .side-dot {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--background));
+            border: 1px solid rgb(var(--border) / 0.5);
+        }
+        
+        .modal-field.total {
+            border-color: rgb(var(--accent) / 0.3);
+            background-color: rgb(var(--accent) / 0.05);
+        }
+        
+        .modal-field.total:hover {
+            background-color: rgb(var(--accent) / 0.1);
+        }
+        
+        .modal-field.total .modal-field-icon {
+            background-color: rgb(var(--accent) / 0.2);
+        }
+        
+        .modal-field.total .modal-field-value {
+            font-size: 1.25rem;
+            color: rgb(var(--accent));
+        }
+        
+        .modal-footer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px dashed rgb(var(--border) / 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.6875rem;
+            color: rgb(var(--muted-foreground));
+        }
+        
+        .modal-footer span:last-child {
+            font-family: monospace;
+        }
+        
+        .perforated-bottom {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            background-color: rgb(var(--muted) / 0.3);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            max-width: 42rem;
+            margin: 0 auto;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .empty-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--muted));
+            margin-bottom: 0.75rem;
+        }
+        
+        .empty-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: rgb(var(--muted-foreground));
+        }
+        
+        .empty-state h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state p {
+            font-size: 0.875rem;
+            color: rgb(var(--muted-foreground));
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.875rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text h1 {
+                font-size: 0.875rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.75rem;
+            }
+            
+            .header-link {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 640px) {
+            .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text h1 {
+                font-size: 0.875rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.75rem;
+            }
+            
+            h1 {
+                font-size: 1.875rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .title-section {
+                margin-bottom: 2rem;
+            }
+            
+            .search-form {
+                margin: 0 auto 2rem;
+            }
+            
+            .logo-img {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.875rem;
+            }
+            
+            .header-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                background-color: rgb(var(--primary));
+                color: rgb(var(--primary-foreground));
+                font-weight: 500;
+                font-size: 0.875rem;
+                text-decoration: none;
+                transition: all 0.2s;
+                flex-shrink: 0;
+            }
+            
+            .header-link:hover {
+                opacity: 0.9;
+            }
+            
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .subtitle {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://i.ibb.co/HTyGwGhP/TUMSIN-FONDO-1024-X1024.png" alt="TeEchoUnaMano Logo" class="logo-img">
+                    <div class="logo-text">
+                        <h1>TeEchoUnaMano TUM</h1>
+                        <p>Servicios de Limpieza Profesional</p>
+                    </div>
+                </div>
+                <a href="https://te-echounamano.blogspot.com" target="_blank" rel="noopener noreferrer" class="header-link">
+                    Más información
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Title Section -->
+            <div class="title-section">
+                <div class="badge">
+                    <div class="pulse-dot"></div>
+                    <span>⚡ Sistema en Tiempo Real</span>
+                </div>
+                <h1>Visor de Registros</h1>
+                <p class="subtitle">Accede a tus datos de Google Sheets de forma dinámica y profesional</p>
+            </div>
+
+            <!-- Search Form -->
+            <div class="search-form">
+                <form id="searchForm" class="search-container">
+                    <div class="input-wrapper">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Código de suscripción..." required>
+                    </div>
+                    <button type="submit" id="searchButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        Buscar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden"></div>
+
+            <!-- Records Grid -->
+            <div id="recordsContainer" class="hidden">
+                <div class="records-grid">
+                    <!-- Main Record -->
+                    <div>
+                        <div class="section-title">
+                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <h2>Registro Más Reciente</h2>
+                        </div>
+                        <div id="mainRecord"></div>
+                    </div>
+
+                    <!-- Other Records -->
+                    <div>
+                        <div class="section-title">
+                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <h2>Registros Anteriores</h2>
+                            <span id="recordCount" style="margin-left: auto; font-size: 0.875rem; color: rgb(var(--muted-foreground));"></span>
+                        </div>
+                        <div id="otherRecords"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+                <h3>Comienza tu búsqueda</h3>
+                <p>Ingresa un ID de suscripción para ver los registros disponibles</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modalOverlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-sheet">
+                <div class="perforated-top">
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                </div>
+                
+                <div class="close-button" onclick="closeModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                
+                <div class="modal-body" id="modalBody"></div>
+                
+                <div class="perforated-bottom">
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJObvioLWCc1ChDBwj3Kag77whhtdzT8TzwxB9zUgD4ECV9avQ717vl6uh7wGmvWkR/exec';
+        let allRecords = [];
+
+        // Format date
+        function formatDate(dateStr) {
+            if (!dateStr) return 'Fecha no disponible';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Get status
+        function getStatus(data) {
+            const enHora = data['En Hora'] === 'TRUE' || data['En Hora'] === true;
+            const realizado = data['Realizado'] === 'TRUE' || data['Realizado'] === true;
+
+            if (realizado) return { label: 'Realizado', class: 'realizado', color: 'text-purple-600' };
+            if (enHora) return { label: 'En Hora', class: 'en-hora', color: 'text-emerald-600' };
+            return { label: 'Pendiente', class: 'pendiente', color: 'text-yellow-600' };
+        }
+
+        // Check if paid
+        function isPaid(data) {
+            const realizado = data['Realizado'] === 'TRUE' || data['Realizado'] === true;
+            const pagoAdelantado = parseFloat(data['RC_Pagos_Total']) || 0;
+            const total = parseFloat(data['A_Total']) || 0;
+            return realizado && pagoAdelantado >= total;
+        }
+
+        // Create main record card
+        function createMainRecordCard(record, arrayIndex) {
+            const cliente = record.data['RS_Nombre'] || '-';
+            const codigo = record.data['RS_Id_Susc'] || '-';
+            const celular = record.data['RS_Celular'] || '-';
+            const horaServicio = record.data['A_Check-IN'] || '-';
+            const status = getStatus(record.data);
+
+            return `
+                <div class="record-card featured" onclick="openModal(${arrayIndex})">
+                    <div class="status-badge ${status.class}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        ${status.label}
+                    </div>
+                    <div class="recent-badge">Más Reciente</div>
+                    
+                    <div style="margin-bottom: 0.75rem; margin-top: 1.5rem;">
+                        <div class="field-row">
+                            <div class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="field-content">
+                                <div class="field-label">Cliente</div>
+                                <div class="field-value">${cliente}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                                    <line x1="16" y1="3" x2="14" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="field-content">
+                                <div class="field-label">Código</div>
+                                <div class="field-value" style="font-family: monospace;">${codigo}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="field-content">
+                                <div class="field-label">Celular</div>
+                                <div class="field-value">${celular}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="field-content">
+                                <div class="field-label">Hora Servicio</div>
+                                <div class="field-value">${horaServicio}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="view-details">
+                        <span>Ver detalles completos</span>
+                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Create compact record card
+        function createCompactRecordCard(record, arrayIndex) {
+            const cliente = record.data['RS_Nombre'] || '-';
+            const fecha = record.data['A_Fecha'] || '-';
+            const status = getStatus(record.data);
+
+            return `
+                <div class="record-card compact" onclick="openModal(${arrayIndex})">
+                    <div class="compact-content">
+                        <div class="compact-info">
+                            <div class="compact-status ${status.color}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>${status.label}</span>
+                            </div>
+                            <div class="compact-name">${cliente}</div>
+                            <div class="compact-date">${formatDate(fecha)}</div>
+                        </div>
+                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open modal
+        function openModal(index) {
+            const record = allRecords[index];
+            const cliente = record.data['RS_Nombre'] || '-';
+            const codigo = record.data['RS_Id_Susc'] || '-';
+            const fecha = record.data['A_Fecha'] || '-';
+            const celular = record.data['RS_Celular'] || '-';
+            const horaServicio = record.data['A_Check-IN'] || '-';
+            const pagoAdelantado = record.data['RC_Pagos_Total'] || '0';
+            const total = record.data['A_Total'] || '0';
+            const status = getStatus(record.data);
+            const servicePaid = isPaid(record.data);
+
+            const statusColors = {
+                'en-hora': 'text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
+                'realizado': 'text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20',
+                'pendiente': 'text-yellow-600 dark:text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
+            };
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-header">
+                    <div class="modal-title-row">
+                        <div class="modal-title-content">
+                            <div class="modal-title-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="modal-title">
+                                <h2>Detalle Registro</h2>
+                                <p>${formatDate(fecha)}</p>
+                            </div>
+                        </div>
+                        <div class="modal-status-badge ${statusColors[status.class]}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>${status.label}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-badges">
+                        <div class="code-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <line x1="4" y1="9" x2="20" y2="9"></line>
+                                <line x1="4" y1="15" x2="20" y2="15"></line>
+                                <line x1="10" y1="3" x2="8" y2="21"></line>
+                                <line x1="16" y1="3" x2="14" y2="21"></line>
+                            </svg>
+                            <span>${codigo}</span>
+                        </div>
+                        ${servicePaid ? `
+                            <div class="paid-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                                <span>Pagado</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+                
+                <div class="modal-fields">
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Cliente</div>
+                                <div class="modal-field-value">${cliente}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                                    <line x1="16" y1="3" x2="14" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Código</div>
+                                <div class="modal-field-value" style="font-family: monospace;">${codigo}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Fecha</div>
+                                <div class="modal-field-value">${formatDate(fecha)}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Celular</div>
+                                <div class="modal-field-value">${celular}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Hora Servicio</div>
+                                <div class="modal-field-value">${horaServicio}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Pago Adelantado</div>
+                                <div class="modal-field-value">$${pagoAdelantado}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                    
+                    <div class="modal-field total">
+                        <div class="modal-field-content">
+                            <div class="modal-field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <div class="modal-field-info">
+                                <div class="modal-field-label">Total</div>
+                                <div class="modal-field-value">$${total}</div>
+                            </div>
+                        </div>
+                        <div class="side-dot"></div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <span>TeEchoUnaMano TUM</span>
+                    <span>Soporte A-TUM</span>
+                </div>
+            `;
+
+            document.getElementById('modalOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+            document.body.style.overflow = 'unset';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Handle search
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const searchValue = document.getElementById('searchInput').value.trim();
+            if (!searchValue) return;
+
+            const searchButton = document.getElementById('searchButton');
+            const errorMessage = document.getElementById('errorMessage');
+            const recordsContainer = document.getElementById('recordsContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            // Show loading
+            searchButton.disabled = true;
+            searchButton.innerHTML = `
+                <div class="spinner"></div>
+                Buscando...
+            `;
+            errorMessage.classList.add('hidden');
+            recordsContainer.classList.add('hidden');
+            emptyState.classList.add('hidden');
+
+            try {
+                const url = `${SCRIPT_URL}?RS_Id_Susc=${encodeURIComponent(searchValue)}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.message || 'Error al buscar datos');
+                }
+
+                const data = result.data || [];
+
+                // Parse and sort records
+                allRecords = data.map((item, index) => {
+                    const dateStr = item['A_Fecha'];
+                    let date = null;
+                    if (dateStr) {
+                        const parsedDate = new Date(dateStr);
+                        if (!isNaN(parsedDate.getTime())) {
+                            date = parsedDate.toISOString();
+                        }
+                    }
+                    return {
+                        data: item,
+                        date: date,
+                        id: `record-${index}`,
+                        index: index
+                    };
+                });
+
+                allRecords.sort((a, b) => {
+                    if (!a.date && !b.date) return 0;
+                    if (!a.date) return 1;
+                    if (!b.date) return -1;
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                });
+
+                if (allRecords.length === 0) {
+                    errorMessage.textContent = 'No se encontraron resultados';
+                    errorMessage.classList.remove('hidden');
+                } else {
+                    // Display records
+                    const mainRecord = allRecords[0];
+                    const otherRecords = allRecords.slice(1);
+
+                    document.getElementById('mainRecord').innerHTML = createMainRecordCard(mainRecord, 0);
+                    document.getElementById('recordCount').textContent = otherRecords.length;
+                    
+                    if (otherRecords.length > 0) {
+                        document.getElementById('otherRecords').innerHTML = otherRecords.map((record, i) => 
+                            createCompactRecordCard(record, i + 1)
+                        ).join('');
+                    } else {
+                        document.getElementById('otherRecords').innerHTML = `
+                            <div style="border: 1px dashed rgb(var(--border) / 0.5); border-radius: 0.5rem; padding: 2rem; text-align: center;">
+                                <p style="font-size: 0.875rem; color: rgb(var(--muted-foreground));">No hay registros anteriores</p>
+                            </div>
+                        `;
+                    }
+
+                    recordsContainer.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMessage.textContent = err.message || 'Error al conectar con Google Sheets';
+                errorMessage.classList.remove('hidden');
+            } finally {
+                // Reset button
+                searchButton.disabled = false;
+                searchButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Buscar
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
