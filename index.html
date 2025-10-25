@@ -254,10 +254,47 @@
             pointer-events: none;
         }
         
-        /* Increased left padding to accommodate icon without overlap */
+        /* Added clear button styling */
+        .clear-button {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: rgb(var(--muted));
+            color: rgb(var(--muted-foreground));
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        
+        .clear-button:hover {
+            background-color: rgb(var(--muted-foreground) / 0.2);
+            color: rgb(var(--foreground));
+        }
+        
+        .clear-button:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .clear-button.visible {
+            display: flex;
+        }
+        
+        .clear-button svg {
+            width: 0.75rem;
+            height: 0.75rem;
+        }
+        
+        /* Added padding-right to input to make space for clear button */
         input {
             width: 100%;
-            padding: 0.625rem 0.625rem 0.625rem 2.5rem;
+            padding: 0.625rem 2.5rem 0.625rem 2.5rem;
             border: 1px solid rgb(var(--border) / 0.5);
             border-radius: 0.5rem;
             background-color: rgb(var(--card));
@@ -1057,6 +1094,12 @@
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
                         <input type="text" id="searchInput" placeholder="Codigo o suscripción..." required>
+                        <div class="clear-button" id="clearButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
                     </div>
                     <button type="submit" id="searchButton">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1155,6 +1198,7 @@
                     <div class="perforation-dot"></div>
                     <div class="perforation-dot"></div>
                     <div class="perforation-dot"></div>
+                    <div class="perforation-dot"></div>
                 </div>
                 
                 <div class="close-button" onclick="closeModal()">
@@ -1204,6 +1248,25 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJObvioLWCc1ChDBwj3Kag77whhtdzT8TzwxB9zUgD4ECV9avQ717vl6uh7wGmvWkR/exec';
         let allRecords = [];
+
+        const searchInput = document.getElementById('searchInput');
+        const clearButton = document.getElementById('clearButton');
+        
+        // Show/hide clear button based on input content
+        searchInput.addEventListener('input', function() {
+            if (this.value.trim().length > 0) {
+                clearButton.classList.add('visible');
+            } else {
+                clearButton.classList.remove('visible');
+            }
+        });
+        
+        // Clear input when clear button is clicked
+        clearButton.addEventListener('click', function() {
+            searchInput.value = '';
+            clearButton.classList.remove('visible');
+            searchInput.focus();
+        });
 
         // Format date
         function formatDate(dateStr) {
