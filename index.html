@@ -242,17 +242,7 @@
             flex: 1;
         }
         
-        /* Fixed search icon positioning to prevent overlap with text */
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1rem;
-            height: 1rem;
-            color: rgb(var(--muted-foreground));
-            pointer-events: none;
-        }
+        /* Removed search icon styles completely */
         
         /* Added clear button styling */
         .clear-button {
@@ -291,10 +281,10 @@
             height: 0.75rem;
         }
         
-        /* Added padding-right to input to make space for clear button */
+        /* Updated input padding - removed left padding for icon since icon is removed */
         input {
             width: 100%;
-            padding: 0.625rem 2.5rem 0.625rem 2.5rem;
+            padding: 0.625rem 2.5rem 0.625rem 0.875rem;
             border: 1px solid rgb(var(--border) / 0.5);
             border-radius: 0.5rem;
             background-color: rgb(var(--card));
@@ -1089,11 +1079,8 @@
             <div class="search-form">
                 <form id="searchForm" class="search-container">
                     <div class="input-wrapper">
-                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        <input type="text" id="searchInput" placeholder="Codigo o suscripción..." required>
+                        <!-- Removed search icon completely -->
+                        <input type="text" id="searchInput" placeholder="Código o suscripción..." required>
                         <div class="clear-button" id="clearButton">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
