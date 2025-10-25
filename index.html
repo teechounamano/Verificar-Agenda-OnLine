@@ -242,19 +242,22 @@
             flex: 1;
         }
         
+        /* Fixed search icon positioning to prevent overlap with text */
         .search-icon {
             position: absolute;
-            left: 0.625rem;
+            left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
             width: 1rem;
             height: 1rem;
             color: rgb(var(--muted-foreground));
+            pointer-events: none;
         }
         
+        /* Increased left padding to accommodate icon without overlap */
         input {
             width: 100%;
-            padding: 0.625rem 0.625rem 0.625rem 2.25rem;
+            padding: 0.625rem 0.625rem 0.625rem 2.5rem;
             border: 1px solid rgb(var(--border) / 0.5);
             border-radius: 0.5rem;
             background-color: rgb(var(--card));
@@ -269,12 +272,13 @@
             box-shadow: 0 0 0 3px rgb(var(--ring) / 0.1);
         }
         
+        /* Made button color more visible with solid blue */
         button {
             padding: 0.625rem 1.25rem;
             border: none;
             border-radius: 0.5rem;
-            background-color: rgb(var(--primary));
-            color: rgb(var(--primary-foreground));
+            background-color: #3b82f6;
+            color: white;
             font-weight: 500;
             font-size: 0.875rem;
             cursor: pointer;
@@ -286,12 +290,7 @@
         }
         
         button:hover:not(:disabled) {
-            opacity: 0.9;
-        }
-        
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+            background-color: #2563eb;
         }
         
         button:active:not(:disabled) {
@@ -299,10 +298,11 @@
         }
         
         /* Loading Spinner */
+        /* Updated spinner to use white color for better visibility */
         .spinner {
             width: 1rem;
             height: 1rem;
-            border: 2px solid rgb(var(--primary-foreground));
+            border: 2px solid white;
             border-top-color: transparent;
             border-radius: 9999px;
             animation: spin 1s linear infinite;
@@ -888,14 +888,12 @@
             width: 1.5rem;
             height: 1.5rem;
             color: rgb(var(--muted-foreground));
-          margin-bottom: 1rem; /* O puedes usar 16px */
         }
         
         .empty-state h3 {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-          margin-bottom: 0.5rem; /* O 8px */
         }
         
         .empty-state p {
@@ -1043,10 +1041,10 @@
             <div class="title-section">
                 <div class="badge">
                     <div class="pulse-dot"></div>
-                    <span>⚡En linea...</span>
+                    <span>⚡ Sistema en Tiempo Real</span>
                 </div>
-                <h1>Visor de Agendamientos</h1>
-                <p class="subtitle">Acceder a tus registros de forma rápida y fácil</p>
+                <h1>Visor de Registros</h1>
+                <p class="subtitle">Accede a tus datos de Google Sheets de forma dinámica y profesional</p>
             </div>
 
             <!-- Search Form -->
@@ -1116,7 +1114,7 @@
                     </svg>
                 </div>
                 <h3>Comienza tu búsqueda</h3>
-                <p>Ingresa un codigo o suscripcion para ver los registros disponibles</p>
+                <p>Ingresa un ID de suscripción para ver los registros disponibles</p>
             </div>
         </div>
     </main>
