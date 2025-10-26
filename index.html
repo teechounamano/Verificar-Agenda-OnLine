@@ -127,6 +127,7 @@
             white-space: nowrap;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
@@ -391,6 +392,14 @@
             gap: 0.5rem;
             box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
             font-family: inherit;
+            width: 100%;
+        }
+        
+        @media (min-width: 640px) {
+            button {
+                width: auto;
+                min-width: 200px;
+            }
         }
         
         button:hover:not(:disabled) {
@@ -1241,7 +1250,6 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <!-- Changed logo path to use imgbb URL for GitHub Pages compatibility -->
                     <img src="https://i.ibb.co/HTyGwGhP/TUMSIN-FONDO-1024-X1024.png" alt="TeEchoUnaMano Logo" class="logo-img">
                     <div class="logo-text">
                         <h1>TeEchoUnaMano TUM</h1>
@@ -1547,7 +1555,6 @@
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-header-bg">
                     <div class="modal-logo">
-                        <!-- Changed logo path to use imgbb URL for GitHub Pages compatibility -->
                         <img src="https://i.ibb.co/HTyGwGhP/TUMSIN-FONDO-1024-X1024.png" alt="TeEchoUnaMano Logo">
                     </div>
                     
