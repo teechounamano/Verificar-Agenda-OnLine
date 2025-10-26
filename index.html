@@ -5,106 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="https://i.ibb.co/HTyGwGhP/TUMSIN-FONDO-1024-X1024.png">
     <title>Verificador de Agendamientos en linea - TeEchoUnaMano TUM</title>
+    <!-- Added Montserrat font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
-        :root {
-            --background: 250 250 250;
-            --foreground: 38 38 38;
-            --card: 255 255 255;
-            --card-foreground: 38 38 38;
-            --primary: 59 130 246;
-            --primary-foreground: 250 250 250;
-            --muted: 242 242 242;
-            --muted-foreground: 115 115 115;
-            --accent: 59 130 246;
-            --accent-foreground: 250 250 250;
-            --destructive: 239 68 68;
-            --border: 229 229 229;
-            --ring: 59 130 246;
-        }
-        
-        .dark {
-            --background: 31 31 31;
-            --foreground: 242 242 242;
-            --card: 41 41 41;
-            --card-foreground: 242 242 242;
-            --muted: 56 56 56;
-            --muted-foreground: 166 166 166;
-            --border: 64 64 64;
-        }
-        
-        * {
+        * { 
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: rgb(var(--background));
-            color: rgb(var(--foreground));
+        /* Updated color scheme to match professional design files */
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: rgba(59, 130, 246, 0.1);
+            --secondary: #10b981;
+            --secondary-hover: #059669;
+            --accent: #06b6d4;
+            --accent-hover: #0891b2;
+            --accent-light: rgba(6, 182, 212, 0.1);
+            
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --card-bg: #ffffff;
+            
+            --foreground: #0f172a;
+            --foreground-muted: #475569;
+            --foreground-subtle: #64748b;
+            
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+            
+            --success: #10b981;
+            --error: #ef4444;
+            --error-light: #fef2f2;
+            
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Updated font family to Montserrat */
+        body { 
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            /* Added gradient background matching professional design */
+            background: linear-gradient(to bottom right, #f8fafc, rgba(219, 234, 254, 0.3), rgba(207, 250, 254, 0.3));
+            color: var(--foreground);
+            line-height: 1.6;
             min-height: 100vh;
+            padding: 0;
         }
-        
-        .container {
-            max-width: 1280px;
+
+        /* Updated header with clean white background and border */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        header .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 0.75rem;
+            padding: 0 1rem;
         }
-        
-        /* Header Styles */
-        .header {
-            border-bottom: 1px solid rgb(var(--border) / 0.5);
-            background-color: rgb(var(--card) / 0.5);
-            backdrop-filter: blur(8px);
-            position: sticky;
-            top: 0;
-            z-index: 40;
-        }
-        
+
         .header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 0;
-            gap: 0.5rem;
+            gap: 1rem;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            min-width: 0;
+            gap: 1rem;
         }
-        
+
+        /* Updated logo styling */
         .logo-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 0.375rem;
-            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            border-radius: 0.75rem;
+            background: white;
+            padding: 0.25rem;
+            box-shadow: var(--shadow);
         }
-        
+
+        /* Updated logo text colors for clean header */
         .logo-text h1 {
-            font-size: 0.8125rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: rgb(var(--foreground));
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: var(--foreground);
+            margin: 0;
+            line-height: 1.2;
         }
-        
+
         .logo-text p {
-            font-size: 0.6875rem;
-            color: rgb(var(--muted-foreground));
+            font-size: 0.875rem;
+            color: var(--foreground-muted);
+            margin: 0;
+        }
+
+        /* Updated header link button with gradient matching professional design */
+        .header-link {
+            background: linear-gradient(to right, #3b82f6, #06b6d4);
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        @media (max-width: 640px) {
+            .logo-img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.125rem;
+            }
+
+            .logo-text p {
+                font-size: 0.75rem;
+            }
+
+            .header-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.8125rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-link {
+                width: 100%;
+            }
         }
         
-        .header-link {
-            display: none;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
         
         /* Main Content */
@@ -205,21 +275,22 @@
         }
         
         h1 {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             line-height: 1.2;
+            color: var(--foreground);
         }
         
         .subtitle {
-            color: rgb(var(--muted-foreground));
-            font-size: 0.875rem;
+            color: var(--foreground-muted);
+            font-size: 1.125rem;
             max-width: 42rem;
             margin: 0 auto;
             line-height: 1.5;
         }
         
-        /* Search Form */
+        /* Updated search form with professional white card design */
         .search-form {
             max-width: 42rem;
             margin: 0 auto 1.5rem;
@@ -227,8 +298,13 @@
         
         .search-container {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             flex-direction: column;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.5);
         }
         
         @media (min-width: 640px) {
@@ -242,9 +318,6 @@
             flex: 1;
         }
         
-        /* Removed search icon styles completely */
-        
-        /* Added clear button styling */
         .clear-button {
             position: absolute;
             right: 0.75rem;
@@ -253,8 +326,8 @@
             width: 1.25rem;
             height: 1.25rem;
             border-radius: 9999px;
-            background-color: rgb(var(--muted));
-            color: rgb(var(--muted-foreground));
+            background-color: var(--border);
+            color: var(--foreground-muted);
             cursor: pointer;
             transition: all 0.2s;
             display: none;
@@ -264,8 +337,8 @@
         }
         
         .clear-button:hover {
-            background-color: rgb(var(--muted-foreground) / 0.2);
-            color: rgb(var(--foreground));
+            background-color: var(--border-hover);
+            color: var(--foreground);
         }
         
         .clear-button:active {
@@ -281,74 +354,87 @@
             height: 0.75rem;
         }
         
-        /* Updated input padding - removed left padding for icon since icon is removed */
+        /* Updated input styling with professional colors */
         input {
             width: 100%;
-            padding: 0.625rem 2.5rem 0.625rem 0.875rem;
-            border: 1px solid rgb(var(--border) / 0.5);
+            padding: 0.875rem 2.5rem 0.875rem 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
             border-radius: 0.5rem;
-            background-color: rgb(var(--card));
-            color: rgb(var(--foreground));
-            font-size: 0.875rem;
-            outline: none;
-            transition: all 0.2s;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--foreground);
+            transition: all 0.2s ease;
         }
         
         input:focus {
-            border-color: rgb(var(--ring));
-            box-shadow: 0 0 0 3px rgb(var(--ring) / 0.1);
+            outline: none;
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px var(--primary-light);
         }
         
-        /* Added visible border to search button for better visibility */
+        /* Updated button with gradient matching professional design */
         button {
-            padding: 0.625rem 1.25rem;
-            border: 2px solid #3b82f6;
+            padding: 0.875rem 1.5rem;
+            border: none;
             border-radius: 0.5rem;
-            background-color: #3b82f6;
+            background: linear-gradient(to right, #3b82f6, #06b6d4);
             color: white;
-            font-weight: 500;
-            font-size: 0.875rem;
+            font-weight: 600;
+            font-size: 0.9375rem;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+            font-family: inherit;
         }
         
         button:hover:not(:disabled) {
-            background-color: #2563eb;
-            border-color: #2563eb;
+            transform: translateY(-1px) scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
         }
         
         button:active:not(:disabled) {
             transform: scale(0.98);
         }
         
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        button svg {
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+        
         /* Loading Spinner */
-        /* Updated spinner to use white color for better visibility */
         .spinner {
             width: 1rem;
             height: 1rem;
             border: 2px solid white;
             border-top-color: transparent;
             border-radius: 9999px;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        /* Error Message */
+        /* Updated error message styling */
         .error-message {
             max-width: 42rem;
             margin: 0 auto 1.5rem;
             padding: 0.75rem;
-            border: 1px solid rgb(var(--destructive) / 0.5);
+            border: 1px solid var(--error);
             border-radius: 0.5rem;
-            background-color: rgb(var(--destructive) / 0.1);
-            color: rgb(var(--destructive));
+            background-color: var(--error-light);
+            color: var(--error);
             font-size: 0.8125rem;
             font-weight: 500;
         }
@@ -380,20 +466,148 @@
             height: 1rem;
         }
         
-        /* Record Card */
+        /* Added styles for badge container in section header */
+        .section-badges {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+        
+        /* Added neon-badge class for fluorescent EN HORA badge in section header */
+        .neon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border: 2px solid #00ff88;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.5),
+                0 0 40px rgba(0, 255, 136, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neon-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s infinite;
+        }
+        
+        .neon-badge .pulse-dot-small {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: #000;
+            animation: pulseDot 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Updated recent-badge to position on card border */
+        .recent-badge {
+            position: absolute;
+            top: -0.75rem;
+            left: 1rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+        
+        /* New style for en-hora badge matching sistema en tiempo real badge, positioned on card border */
+        .en-hora-badge {
+            position: absolute;
+            top: -0.75rem;
+            right: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border: 2px solid #00ff88;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 
+                0 0 15px rgba(0, 255, 136, 0.5),
+                0 0 30px rgba(0, 255, 136, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .en-hora-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s infinite;
+        }
+        
+        .en-hora-badge .pulse-dot-small {
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 9999px;
+            background-color: #000;
+            animation: pulseDot 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Updated record card with professional design matching appointment-card */
         .record-card {
             position: relative;
-            border: 1px solid rgb(var(--border) / 0.5);
+            border: 2px solid #dbeafe;
             border-radius: 0.75rem;
-            background-color: rgb(var(--card));
+            background-color: var(--card-bg);
             padding: 1rem;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: var(--shadow-lg);
         }
         
         .record-card:hover {
-            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
-            border-color: rgb(var(--accent) / 0.5);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
         
         .record-card:active {
@@ -401,52 +615,43 @@
         }
         
         .record-card.featured {
-            border-color: rgb(var(--accent) / 0.3);
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border-color: #bfdbfe;
+            box-shadow: var(--shadow-xl);
         }
         
         .record-card.featured:hover {
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         
+        /* Updated status badges with gradients matching professional design */
         .status-badge {
             position: absolute;
-            top: -0.5rem;
+            top: 1rem;
             right: 1rem;
-            padding: 0.25rem 0.625rem;
+            padding: 0.375rem 0.75rem;
             border-radius: 9999px;
             color: white;
-            font-size: 0.6875rem;
-            font-weight: 600;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.375rem;
         }
         
         .status-badge.en-hora {
-            background-color: rgb(5 150 105);
+            background: linear-gradient(to right, #10b981, #059669);
         }
         
         .status-badge.realizado {
-            background-color: rgb(147 51 234);
+            background: linear-gradient(to right, #3b82f6, #2563eb);
         }
         
         .status-badge.pendiente {
-            background-color: rgb(202 138 4);
+            background: linear-gradient(to right, #f59e0b, #d97706);
         }
         
-        .recent-badge {
-            position: absolute;
-            top: -0.5rem;
-            left: 1rem;
-            padding: 0.25rem 0.625rem;
-            border-radius: 9999px;
-            background-color: rgb(var(--accent));
-            color: rgb(var(--accent-foreground));
-            font-size: 0.6875rem;
-            font-weight: 600;
-        }
+        /* REMOVED DUPLICATE recent-badge definition - it was overriding the correct positioning */
         
         .field-row {
             display: flex;
@@ -460,7 +665,7 @@
             width: 1.75rem;
             height: 1.75rem;
             border-radius: 9999px;
-            background-color: rgb(var(--accent) / 0.1);
+            background-color: var(--primary-light);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -469,7 +674,7 @@
         .field-icon svg {
             width: 0.875rem;
             height: 0.875rem;
-            color: rgb(var(--accent));
+            color: var(--primary);
         }
         
         .field-content {
@@ -479,20 +684,21 @@
         
         .field-label {
             font-size: 0.6875rem;
-            color: rgb(var(--muted-foreground));
+            color: var(--foreground-muted);
             margin-bottom: 0.125rem;
+            font-weight: 500;
         }
         
         .field-value {
             font-size: 0.8125rem;
             font-weight: 600;
-            color: rgb(var(--card-foreground));
+            color: var(--foreground);
             word-break: break-word;
         }
         
         .view-details {
             padding-top: 0.625rem;
-            border-top: 1px solid rgb(var(--border) / 0.5);
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -502,7 +708,7 @@
         .view-details span {
             font-size: 0.8125rem;
             font-weight: 500;
-            color: rgb(var(--accent));
+            color: var(--primary);
         }
         
         .record-card:hover .view-details span {
@@ -512,7 +718,7 @@
         .chevron-icon {
             width: 1rem;
             height: 1rem;
-            color: rgb(var(--accent));
+            color: var(--primary);
             transition: transform 0.2s;
         }
         
@@ -557,7 +763,7 @@
         .compact-name {
             font-size: 0.8125rem;
             font-weight: 600;
-            color: rgb(var(--card-foreground));
+            color: var(--foreground);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -566,13 +772,13 @@
         
         .compact-date {
             font-size: 0.6875rem;
-            color: rgb(var(--muted-foreground));
+            color: var(--foreground-muted);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         
-        /* Modal */
+        /* Completely redesigned modal to match clean professional design from image */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -580,317 +786,334 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem;
-            background-color: rgb(var(--background) / 0.8);
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
         }
-        
+
         .modal-overlay.hidden {
             display: none;
         }
-        
+
         .modal-content {
             position: relative;
             width: 100%;
-            max-width: 42rem;
+            /* Reduced max-width from 600px to 500px for more compact modal */
+            max-width: 500px;
             max-height: 90vh;
-            overflow: hidden;
+            overflow-y: auto;
         }
-        
+
         .modal-sheet {
             position: relative;
-            background-color: rgb(var(--card));
-            border-radius: 0.75rem;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            border: 1px solid rgb(var(--border) / 0.5);
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            /* Reduced padding from 2rem to 1.5rem for more compact modal */
+            padding: 1.5rem;
         }
-        
-        .perforated-top {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 0.75rem;
-            align-items: center;
-            justify-content: center;
-            gap: 0.375rem;
-            background-color: rgb(var(--muted) / 0.3);
-        }
-        
-        .perforation-dot {
-            width: 0.3125rem;
-            height: 0.3125rem;
-            border-radius: 9999px;
-            background-color: rgb(var(--background));
-            border: 1px solid rgb(var(--border) / 0.5);
-        }
-        
+
         .close-button {
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+            top: 1rem;
+            right: 1rem;
             z-index: 10;
-            border-radius: 9999px;
-            padding: 0.375rem;
-            background-color: rgb(var(--muted));
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .close-button:hover {
-            background-color: rgb(var(--muted) / 0.8);
-        }
-        
-        .close-button:active {
-            transform: scale(0.95);
-        }
-        
-        .modal-body {
-            padding: 2rem 1rem 1rem;
-            overflow-y: auto;
-            max-height: 85vh;
-        }
-        
-        .modal-header {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px dashed rgb(var(--border) / 0.5);
-        }
-        
-        .modal-title-row {
-            display: flex;
-            align-items: start;
-            justify-content: space-between;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            padding-right: 3rem; /* Increased from 2rem to 3rem to create more space for close button */
-        }
-        
-        .modal-title-content {
-            display: flex;
-            align-items: start;
-            gap: 0.75rem;
-        }
-        
-        .modal-title-icon {
-            flex-shrink: 0;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
-            background-color: rgb(var(--accent) / 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-title-icon svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: rgb(var(--accent));
-        }
-        
-        .modal-title h2 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: rgb(var(--card-foreground));
-            margin-bottom: 0.25rem;
-        }
-        
-        .modal-title p {
-            font-size: 0.75rem;
-            color: rgb(var(--muted-foreground));
-        }
-        
-        .modal-status-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0.625rem;
-            border-radius: 9999px;
-            border: 1px solid;
-            flex-shrink: 0;
-        }
-        
-        .modal-status-badge svg {
-            width: 0.875rem;
-            height: 0.875rem;
-        }
-        
-        .modal-status-badge span {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .modal-badges {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .code-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0.625rem;
-            border-radius: 9999px;
-            background-color: rgb(var(--accent) / 0.1);
-            border: 1px solid rgb(var(--accent) / 0.2);
-        }
-        
-        .code-badge svg {
-            width: 0.75rem;
-            height: 0.75rem;
-            color: rgb(var(--accent));
-        }
-        
-        .code-badge span {
-            font-size: 0.6875rem;
-            font-family: monospace;
-            font-weight: 500;
-            color: rgb(var(--accent));
-        }
-        
-        .paid-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.25rem 0.625rem;
-            border-radius: 9999px;
-            background-color: rgb(5 150 105 / 0.1);
-            border: 1px solid rgb(5 150 105 / 0.2);
-        }
-        
-        .paid-badge svg {
-            width: 0.75rem;
-            height: 0.75rem;
-            color: rgb(5 150 105);
-        }
-        
-        .paid-badge span {
-            font-size: 0.6875rem;
-            font-weight: 500;
-            color: rgb(5 150 105);
-        }
-        
-        .modal-fields {
-            display: flex;
-            flex-direction: column;
-            gap: 0.625rem;
-        }
-        
-        .modal-field {
-            position: relative;
-            border: 1px solid rgb(var(--border) / 0.5);
-            border-radius: 0.5rem;
-            background-color: rgb(var(--muted) / 0.3);
-            padding: 0.75rem;
-            transition: all 0.2s;
-        }
-        
-        .modal-field:hover {
-            background-color: rgb(var(--muted) / 0.5);
-        }
-        
-        .modal-field-content {
-            display: flex;
-            align-items: start;
-            gap: 0.75rem;
-        }
-        
-        .modal-field-icon {
-            flex-shrink: 0;
             width: 2rem;
             height: 2rem;
             border-radius: 9999px;
-            background-color: rgb(var(--accent) / 0.1);
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #64748b;
+            padding: 0;
+        }
+
+        .close-button:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .close-button svg {
+            width: 1.25rem;
+            height: 1.25rem;
         }
         
-        .modal-field-icon svg {
+        .modal-header-bg {
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.9), rgba(232, 242, 255, 0.9));
+            border-radius: 1rem 1rem 0 0;
+            /* Reduced padding for more compact modal header */
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            margin: -1.5rem -1.5rem 1rem -1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Added perforated edge effect to create ticket-style separation */
+        .modal-header-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background-image: radial-gradient(circle at 10px 10px, white 10px, transparent 10px);
+            background-size: 30px 20px;
+            background-position: 0 0;
+            background-repeat: repeat-x;
+        }
+
+        .modal-logo {
+            display: flex;
+            justify-content: center;
+            /* Reduced margin for more compact spacing */
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-logo img {
+            /* Reduced logo size from 64px to 56px */
+            width: 56px;
+            height: 56px;
+            border-radius: 0.75rem;
+        }
+
+        .modal-header-title {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header-title h2 {
+            /* Reduced font size from 1.5rem to 1.25rem */
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-header-title p {
+            /* Reduced font size from 0.875rem to 0.8125rem */
+            font-size: 0.8125rem;
+            color: #64748b;
+        }
+
+        .modal-status-center {
+            display: flex;
+            justify-content: center;
+            /* Reduced margin for more compact spacing */
+            margin-bottom: 1rem;
+        }
+
+        .modal-status-badge-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* Reduced padding for more compact badge */
+            padding: 0.375rem 1rem;
+            border-radius: 9999px;
+            /* Reduced font size from 0.875rem to 0.8125rem */
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-status-badge-large.realizado {
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+        }
+
+        .modal-status-badge-large.en-hora {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+
+        .modal-status-badge-large.pendiente {
+            background: linear-gradient(to right, #f59e0b, #d97706);
+        }
+
+        .modal-status-badge-large svg {
             width: 1rem;
             height: 1rem;
-            color: rgb(var(--accent));
         }
-        
-        .modal-field-info {
+
+        .modal-body {
+            /* Reduced negative margins to match new padding */
+            margin: -1.5rem -1.5rem -1.5rem -1.5rem;
+            padding: 1.5rem;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* Reduced gap from 1rem to 0.75rem for more compact layout */
+            gap: 0.75rem;
+            /* Reduced margin for more compact spacing */
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Added mobile-specific modal optimizations */
+            .modal-content {
+                max-height: 85vh;
+            }
+            
+            .modal-sheet {
+                padding: 1rem;
+                border-radius: 0.75rem;
+            }
+            
+            .modal-header-bg {
+                padding: 1rem 1rem 0.75rem 1rem;
+                margin: -1rem -1rem 0.75rem -1rem;
+            }
+            
+            .modal-body {
+                margin: -1rem -1rem -1rem -1rem;
+                padding: 1rem;
+            }
+            
+            .modal-logo img {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .modal-header-title h2 {
+                font-size: 1.125rem;
+            }
+            
+            .modal-header-title p {
+                font-size: 0.75rem;
+            }
+        }
+
+        .modal-field-box {
+            background-color: #f8fafc;
+            border-radius: 0.75rem;
+            /* Reduced padding from 1rem to 0.875rem for more compact fields */
+            padding: 0.875rem;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            border: 1px solid #f1f5f9;
+        }
+
+        .modal-field-icon-box {
+            flex-shrink: 0;
+            /* Reduced icon box size from 2.5rem to 2.25rem */
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+        }
+
+        .modal-field-icon-box svg {
+            /* Reduced icon size from 1.25rem to 1.125rem */
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+
+        .modal-field-text {
             flex: 1;
             min-width: 0;
         }
-        
-        .modal-field-label {
+
+        .modal-field-label-box {
+            /* Reduced font size from 0.75rem to 0.6875rem */
             font-size: 0.6875rem;
-            color: rgb(var(--muted-foreground));
+            color: #64748b;
             margin-bottom: 0.25rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
         }
-        
-        .modal-field-value {
-            font-size: 0.9375rem;
-            font-weight: 700;
-            color: rgb(var(--card-foreground));
+
+        .modal-field-value-box {
+            /* Reduced font size from 0.9375rem to 0.875rem */
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #0f172a;
             word-break: break-word;
         }
-        
-        .side-dot {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 0.375rem;
-            height: 0.375rem;
-            border-radius: 9999px;
-            background-color: rgb(var(--background));
-            border: 1px solid rgb(var(--border) / 0.5);
+
+        .modal-divider {
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 1.5rem 0;
         }
-        
-        .modal-field.total {
-            border-color: rgb(var(--accent) / 0.3);
-            background-color: rgb(var(--accent) / 0.05);
+
+        .modal-totals {
+            background: linear-gradient(to bottom right, #f8fafc, #dbeafe);
+            border-radius: 0.75rem;
+            /* Reduced padding from 1rem to 0.875rem */
+            padding: 0.875rem;
+            border: 1px solid #e2e8f0;
         }
-        
-        .modal-field.total:hover {
-            background-color: rgb(var(--accent) / 0.1);
-        }
-        
-        .modal-field.total .modal-field-icon {
-            background-color: rgb(var(--accent) / 0.2);
-        }
-        
-        .modal-field.total .modal-field-value {
-            font-size: 1.25rem;
-            color: rgb(var(--accent));
-        }
-        
-        .modal-footer {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px dashed rgb(var(--border) / 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+
+        .modal-totals-label {
+            /* Reduced font size from 0.75rem to 0.6875rem */
             font-size: 0.6875rem;
-            color: rgb(var(--muted-foreground));
+            color: #64748b;
+            /* Reduced margin for more compact spacing */
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            font-weight: 500;
         }
-        
-        .modal-footer span:last-child {
-            font-family: monospace;
-        }
-        
-        .perforated-bottom {
+
+        .modal-total-row {
             display: flex;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 0.75rem;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 0.375rem;
-            background-color: rgb(var(--muted) / 0.3);
+            /* Reduced margins for more compact spacing */
+            margin-bottom: 0.625rem;
+            padding-bottom: 0.625rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-total-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .modal-total-label {
+            /* Reduced font size from 0.875rem to 0.8125rem */
+            font-size: 0.8125rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .modal-total-value {
+            /* Reduced font size from 1.25rem to 1.125rem */
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .modal-total-value.blue {
+            color: #3b82f6;
+        }
+
+        .modal-total-value.green {
+            color: #10b981;
+        }
+
+        .modal-total-row.paid {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-total-row.paid svg {
+            width: 1rem;
+            height: 1rem;
+            color: #10b981;
         }
         
         /* Empty State */
@@ -908,14 +1131,14 @@
             width: 3rem;
             height: 3rem;
             border-radius: 9999px;
-            background-color: rgb(var(--muted));
+            background-color: var(--border);
             margin-bottom: 0.75rem;
         }
         
         .empty-icon svg {
             width: 1.5rem;
             height: 1.5rem;
-            color: rgb(var(--muted-foreground));
+            color: var(--foreground-muted);
         }
         
         .empty-state h3 {
@@ -926,7 +1149,7 @@
         
         .empty-state p {
             font-size: 0.875rem;
-            color: rgb(var(--muted-foreground));
+            color: var(--foreground-muted);
         }
         
         .hidden {
@@ -936,20 +1159,20 @@
         /* Responsive */
         @media (max-width: 640px) {
             h1 {
-                font-size: 1.875rem;
+                font-size: 1.5rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 0.875rem;
             }
             
             .logo-img {
-                width: 40px;
-                height: 40px;
+                width: 48px;
+                height: 48px;
             }
             
             .logo-text h1 {
-                font-size: 0.875rem;
+                font-size: 1rem;
             }
             
             .logo-text p {
@@ -957,30 +1180,31 @@
             }
             
             .header-link {
-                display: none;
+                padding: 0.5rem 1rem;
+                font-size: 0.8125rem;
             }
         }
         
         @media (min-width: 640px) {
             .logo-img {
-                width: 40px;
-                height: 40px;
+                width: 56px;
+                height: 56px;
             }
             
             .logo-text h1 {
-                font-size: 0.875rem;
+                font-size: 1.25rem;
             }
             
             .logo-text p {
-                font-size: 0.75rem;
+                font-size: 0.875rem;
             }
             
             h1 {
-                font-size: 1.875rem;
+                font-size: 2rem;
             }
             
             .subtitle {
-                font-size: 1rem;
+                font-size: 1.125rem;
             }
         }
         
@@ -1001,51 +1225,19 @@
                 margin: 0 auto 2rem;
             }
             
-            .logo-img {
-                width: 48px;
-                height: 48px;
-            }
-            
-            .logo-text h1 {
-                font-size: 1rem;
-            }
-            
-            .logo-text p {
-                font-size: 0.875rem;
-            }
-            
-            .header-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 0.5rem 1rem;
-                border-radius: 0.5rem;
-                background-color: rgb(var(--primary));
-                color: rgb(var(--primary-foreground));
-                font-weight: 500;
-                font-size: 0.875rem;
-                text-decoration: none;
-                transition: all 0.2s;
-                flex-shrink: 0;
-            }
-            
-            .header-link:hover {
-                opacity: 0.9;
-            }
-            
             h1 {
-                font-size: 2.25rem;
+                font-size: 2.5rem;
             }
             
             .subtitle {
-                font-size: 1.125rem;
+                font-size: 1.25rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -1055,8 +1247,13 @@
                         <p>Servicios de Limpieza Profesional</p>
                     </div>
                 </div>
-                <a href="https://te-echounamano.blogspot.com" target="_blank" rel="noopener noreferrer" class="header-link">
-                    Más información
+                <a href="https://teechounamano.github.io/Soporte/" target="_blank" rel="noopener noreferrer" class="header-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Soporte TUM
                 </a>
             </div>
         </div>
@@ -1067,20 +1264,15 @@
         <div class="container">
             <!-- Title Section -->
             <div class="title-section">
-                <div class="badge">
-                    <div class="pulse-dot"></div>
-                    <span>⚡En Linea..</span>
-                </div>
-                <!--<h1>Visor de Registros</h1>-->
-                <p class="subtitle"> Acceder a tus registros de forma rápida y fácil </p>
+                <h1> Mis Citas </h1>
+                <p class="subtitle">¿Ya tienes tu código? Ingrésalo para ver el detalle de tus citas.</p>
             </div>
 
             <!-- Search Form -->
             <div class="search-form">
                 <form id="searchForm" class="search-container">
                     <div class="input-wrapper">
-                        <!-- Removed search icon completely -->
-                        <input type="text" id="searchInput" placeholder="  Código o suscripción...  " required>
+                        <input type="text" id="searchInput" placeholder="Ingresa tu (código)" required>
                         <div class="clear-button" id="clearButton">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1089,7 +1281,7 @@
                         </div>
                     </div>
                     <button type="submit" id="searchButton">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
@@ -1106,14 +1298,16 @@
                 <div class="records-grid">
                     <!-- Main Record -->
                     <div>
+                        <!-- Added section-badges container for fluorescent EN HORA badge -->
                         <div class="section-title">
-                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                 <line x1="16" y1="2" x2="16" y2="6"></line>
                                 <line x1="8" y1="2" x2="8" y2="6"></line>
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
-                            <h2>Registro Más Reciente</h2>
+                            <h2>Última Entrada</h2>
+                            <div class="section-badges" id="sectionBadges"></div>
                         </div>
                         <div id="mainRecord"></div>
                     </div>
@@ -1121,15 +1315,15 @@
                     <!-- Other Records -->
                     <div>
                         <div class="section-title">
-                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
                                 <line x1="16" y1="13" x2="8" y2="13"></line>
                                 <line x1="16" y1="17" x2="8" y2="17"></line>
                                 <polyline points="10 9 9 9 8 9"></polyline>
                             </svg>
                             <h2>Registros Anteriores</h2>
-                            <span id="recordCount" style="margin-left: auto; font-size: 0.875rem; color: rgb(var(--muted-foreground));"></span>
+                            <span id="recordCount" style="margin-left: auto; font-size: 0.875rem; color: var(--foreground-muted);"></span>
                         </div>
                         <div id="otherRecords"></div>
                     </div>
@@ -1139,13 +1333,13 @@
             <!-- Empty State -->
             <div id="emptyState" class="empty-state">
                 <div class="empty-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
                 </div>
                 <h3>Comienza tu búsqueda</h3>
-                <p>Ingresa un ID de suscripción para ver los registros disponibles</p>
+                <p>¿Necesitas tu código? Solicítalo por WhatsApp en (Soporte TUM)</p>
             </div>
         </div>
     </main>
@@ -1154,80 +1348,14 @@
     <div id="modalOverlay" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-sheet">
-                <div class="perforated-top">
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                </div>
-                
                 <div class="close-button" onclick="closeModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </div>
                 
-                <div class="modal-body" id="modalBody"></div>
-                
-                <div class="perforated-bottom">
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                    <div class="perforation-dot"></div>
-                </div>
+                <div id="modalBody"></div>
             </div>
         </div>
     </div>
@@ -1260,6 +1388,7 @@
             if (!dateStr) return 'Fecha no disponible';
             const date = new Date(dateStr);
             return date.toLocaleDateString('es-ES', {
+                weekday: 'long',
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -1271,7 +1400,7 @@
             const enHora = data['En Hora'] === 'TRUE' || data['En Hora'] === true;
             const realizado = data['Realizado'] === 'TRUE' || data['Realizado'] === true;
 
-            if (realizado) return { label: 'Realizado', class: 'realizado', color: 'text-purple-600' };
+            if (realizado) return { label: 'Realizado', class: 'realizado', color: 'text-blue-600' };
             if (enHora) return { label: 'En Hora', class: 'en-hora', color: 'text-emerald-600' };
             return { label: 'Pendiente', class: 'pendiente', color: 'text-yellow-600' };
         }
@@ -1288,38 +1417,29 @@
         function createMainRecordCard(record, arrayIndex) {
             const cliente = record.data['RS_Nombre'] || '-';
             const codigo = record.data['RS_Id_Susc'] || '-';
-            const celular = record.data['RS_Celular'] || '-';
+            const fecha = record.data['A_Fecha'] || '-';
             const horaServicio = record.data['A_Check-IN'] || '-';
             const status = getStatus(record.data);
-
+            
+            
             return `
                 <div class="record-card featured" onclick="openModal(${arrayIndex})">
-                    <div class="status-badge ${status.class}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        ${status.label}
-                    </div>
+                    <!-- Added badges positioned on the card border -->
                     <div class="recent-badge">Más Reciente</div>
                     
-                    <div style="margin-bottom: 0.75rem; margin-top: 1.5rem;">
+                    <!-- Added fluorescent EN HORA badge on card border when status is en-hora -->
+                    ${status.class === 'en-hora' ? `
+                    <div class="en-hora-badge">
+                        <div class="pulse-dot-small"></div>
+                        <span>EN HORA</span>
+                    </div>
+                    ` : ''}
+                    
+                    <!-- Added padding-top to create space below the badge -->
+                    <div style="margin-bottom: 0.75rem; padding-top: 1.5rem;">
                         <div class="field-row">
                             <div class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <div class="field-content">
-                                <div class="field-label">Cliente</div>
-                                <div class="field-value">${cliente}</div>
-                            </div>
-                        </div>
-                        
-                        <div class="field-row">
-                            <div class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <line x1="4" y1="9" x2="20" y2="9"></line>
                                     <line x1="4" y1="15" x2="20" y2="15"></line>
                                     <line x1="10" y1="3" x2="8" y2="21"></line>
@@ -1334,19 +1454,35 @@
                         
                         <div class="field-row">
                             <div class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </div>
                             <div class="field-content">
-                                <div class="field-label">Celular</div>
-                                <div class="field-value">${celular}</div>
+                                <div class="field-label">Cliente</div>
+                                <div class="field-value">${cliente}</div>
                             </div>
                         </div>
                         
                         <div class="field-row">
                             <div class="field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="field-content">
+                                <div class="field-label">Fecha</div>
+                                <div class="field-value">${formatDate(fecha)}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="field-row">
+                            <div class="field-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
@@ -1360,7 +1496,7 @@
                     
                     <div class="view-details">
                         <span>Ver detalles completos</span>
-                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </div>
@@ -1379,7 +1515,7 @@
                     <div class="compact-content">
                         <div class="compact-info">
                             <div class="compact-status ${status.color}">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
@@ -1388,7 +1524,7 @@
                             <div class="compact-name">${cliente}</div>
                             <div class="compact-date">${formatDate(fecha)}</div>
                         </div>
-                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </div>
@@ -1396,7 +1532,6 @@
             `;
         }
 
-        // Open modal
         function openModal(index) {
             const record = allRecords[index];
             const cliente = record.data['RS_Nombre'] || '-';
@@ -1404,185 +1539,120 @@
             const fecha = record.data['A_Fecha'] || '-';
             const celular = record.data['RS_Celular'] || '-';
             const horaServicio = record.data['A_Check-IN'] || '-';
-            const pagoAdelantado = record.data['RC_Pagos_Total'] || '0';
-            const total = record.data['A_Total'] || '0';
+            const pagoAdelantado = parseFloat(record.data['RC_Pagos_Total']) || 0;
+            const total = parseFloat(record.data['A_Total']) || 0;
             const status = getStatus(record.data);
-            const servicePaid = isPaid(record.data);
-
-            const statusColors = {
-                'en-hora': 'text-emerald-600 dark:text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
-                'realizado': 'text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20',
-                'pendiente': 'text-yellow-600 dark:text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
-            };
 
             document.getElementById('modalBody').innerHTML = `
-                <div class="modal-header">
-                    <div class="modal-title-row">
-                        <div class="modal-title-content">
-                            <div class="modal-title-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                            </div>
-                            <div class="modal-title">
-                                <h2>Detalle Registro</h2>
-                                <p>${formatDate(fecha)}</p>
-                            </div>
-                        </div>
-                        <div class="modal-status-badge ${statusColors[status.class]}">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="modal-header-bg">
+                    <div class="modal-logo">
+                        <img src="https://i.ibb.co/HTyGwGhP/TUMSIN-FONDO-1024-X1024.png" alt="TeEchoUnaMano Logo">
+                    </div>
+                    
+                    <div class="modal-header-title">
+                        <h2>Agenda TUM</h2>
+                        <p>Servicio de Limpieza Profesional</p>
+                    </div>
+                    
+                    <div class="modal-status-center">
+                        <div class="modal-status-badge-large ${status.class}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
-                            <span>${status.label}</span>
+                            ${status.label}
                         </div>
-                    </div>
-                    
-                    <div class="modal-badges">
-                        <div class="code-badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <line x1="4" y1="9" x2="20" y2="9"></line>
-                                <line x1="4" y1="15" x2="20" y2="15"></line>
-                                <line x1="10" y1="3" x2="8" y2="21"></line>
-                                <line x1="16" y1="3" x2="14" y2="21"></line>
-                            </svg>
-                            <span>${codigo}</span>
-                        </div>
-                        ${servicePaid ? `
-                            <div class="paid-badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                                </svg>
-                                <span>Pagado</span>
-                            </div>
-                        ` : ''}
                     </div>
                 </div>
                 
-                <div class="modal-fields">
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Cliente</div>
-                                <div class="modal-field-value">${cliente}</div>
-                            </div>
-                        </div>
-                        <div class="side-dot"></div>
-                    </div>
-                    
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="modal-body">
+                    <div class="modal-grid">
+                        <div class="modal-field-box">
+                            <div class="modal-field-icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <line x1="4" y1="9" x2="20" y2="9"></line>
                                     <line x1="4" y1="15" x2="20" y2="15"></line>
                                     <line x1="10" y1="3" x2="8" y2="21"></line>
                                     <line x1="16" y1="3" x2="14" y2="21"></line>
                                 </svg>
                             </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Código</div>
-                                <div class="modal-field-value" style="font-family: monospace;">${codigo}</div>
+                            <div class="modal-field-text">
+                                <div class="modal-field-label-box">CÓDIGO</div>
+                                <div class="modal-field-value-box" style="font-family: monospace;">${codigo}</div>
                             </div>
                         </div>
-                        <div class="side-dot"></div>
-                    </div>
-                    
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        
+                        <div class="modal-field-box">
+                            <div class="modal-field-icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="modal-field-text">
+                                <div class="modal-field-label-box">CLIENTE</div>
+                                <div class="modal-field-value-box">${cliente}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-field-box">
+                            <div class="modal-field-icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                     <line x1="16" y1="2" x2="16" y2="6"></line>
                                     <line x1="8" y1="2" x2="8" y2="6"></line>
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                             </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Fecha</div>
-                                <div class="modal-field-value">${formatDate(fecha)}</div>
+                            <div class="modal-field-text">
+                                <div class="modal-field-label-box">FECHA</div>
+                                <div class="modal-field-value-box">${formatDate(fecha)}</div>
                             </div>
                         </div>
-                        <div class="side-dot"></div>
-                    </div>
-                    
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                                </svg>
-                            </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Celular</div>
-                                <div class="modal-field-value">${celular}</div>
-                            </div>
-                        </div>
-                        <div class="side-dot"></div>
-                    </div>
-                    
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        
+                        <div class="modal-field-box">
+                            <div class="modal-field-icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
                             </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Hora Servicio</div>
-                                <div class="modal-field-value">${horaServicio}</div>
+                            <div class="modal-field-text">
+                                <div class="modal-field-label-box">HORA</div>
+                                <div class="modal-field-value-box">${horaServicio}</div>
                             </div>
                         </div>
-                        <div class="side-dot"></div>
-                    </div>
-                    
-                    <div class="modal-field">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                        
+                        <div class="modal-field-box">
+                            <div class="modal-field-icon-box">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                                 </svg>
                             </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Pago Adelantado</div>
-                                <div class="modal-field-value">$${pagoAdelantado}</div>
+                            <div class="modal-field-text">
+                                <div class="modal-field-label-box">CELULAR</div>
+                                <div class="modal-field-value-box">${celular}</div>
                             </div>
                         </div>
-                        <div class="side-dot"></div>
                     </div>
                     
-                    <div class="modal-field total">
-                        <div class="modal-field-content">
-                            <div class="modal-field-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <line x1="12" y1="1" x2="12" y2="23"></line>
-                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                                </svg>
-                            </div>
-                            <div class="modal-field-info">
-                                <div class="modal-field-label">Total</div>
-                                <div class="modal-field-value">$${total}</div>
-                            </div>
+                    <div class="modal-totals">
+                        <div class="modal-totals-label">ID de Agendamiento</div>
+                        
+                        <!-- Added two separate payment fields: Total and Pago Realizado -->
+                        <div class="modal-total-row">
+                            <span class="modal-total-label">Total del Servicio</span>
+                            <span class="modal-total-value blue">$${total.toFixed(2)}</span>
                         </div>
-                        <div class="side-dot"></div>
+                        
+                        <div class="modal-total-row paid">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span class="modal-total-label">Pago Realizado</span>
+                            <span class="modal-total-value green">$${pagoAdelantado.toFixed(2)}</span>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <span>TeEchoUnaMano TUM</span>
-                    <span>Soporte A-TUM</span>
                 </div>
             `;
 
@@ -1686,8 +1756,8 @@
                         ).join('');
                     } else {
                         document.getElementById('otherRecords').innerHTML = `
-                            <div style="border: 1px dashed rgb(var(--border) / 0.5); border-radius: 0.5rem; padding: 2rem; text-align: center;">
-                                <p style="font-size: 0.875rem; color: rgb(var(--muted-foreground));">No hay registros anteriores</p>
+                            <div style="border: 1px dashed var(--border); border-radius: 0.5rem; padding: 2rem; text-align: center;">
+                                <p style="font-size: 0.875rem; color: var(--foreground-muted);">No hay registros anteriores</p>
                             </div>
                         `;
                     }
@@ -1701,17 +1771,14 @@
                 // Reset button
                 searchButton.disabled = false;
                 searchButton.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
-                    Buscar
+                    Buscar Agendamientos
                 `;
             }
         });
     </script>
 </body>
 </html>
-
-
-
